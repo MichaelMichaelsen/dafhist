@@ -19,4 +19,4 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 
 Here is a screen shot of the appliation
 
-![Screen Shot] (Screenshot from 2019-12-03 16-51-55.png)
+![Screen Shot](Screenshot from 2019-12-03 16-51-55.png)

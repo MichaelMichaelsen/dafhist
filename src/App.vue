@@ -3,26 +3,36 @@
     <b-container fluid>
     <h1>{{service}} - Historik</h1>
       <div class="row">
-        <div class=col col-sm-6>
+        <div class=col col-sm-8>
           <b-form  @submit.stop.prevent >
-            <label for="serviceselect">Service</label>
-            <b-form-select id="serviceselect" v-model="service" :options="darservices"></b-form-select>
-            <label for="uuid">{{service}} UUID</label>
-            <b-input
-               v-model="idlokalId"
-               type="text"
-               id="uuid"
-               size="35">
-            </b-input>
+            <b-form-group>
+              <label for="serviceselect">Service</label>
+              <b-form-select id="serviceselect" v-model="service" :options="darservices"></b-form-select>
+            </b-form-group>
+            <b-form-group>
+              <label for="uuid">{{service}} UUID</label>
+              <b-input
+                 v-model="idlokalId"
+                 type="text"
+                 id="uuid"
+                 size="35">
+              </b-input>
+            </b-form-group>
           </b-form>
         </div>
-        <div class="col col-sm-6">
+        <div class="col col-sm-4">
           <h3>Samples</h3>
-          <ul class="list-group">
-            <li class="list-group-item" v-for="(uuid,uuidindex) in sampleUUID" >
-              <b-button @click="updateUUID(uuid)" type="button" class="btn btn-success">{{uuidindex+1}}. {{ uuid }}</b-button>
-            </li>
-          </ul>
+          <div class="list-group list-group-flush">
+            <b-button
+              type="button"
+              class="list-group-item list-group-item-action text-monospace"
+              @click="updateUUID(uuid)"
+              v-for="(uuid,uuidindex) in sampleUUID"
+              >
+              {{uuidindex+1}}. {{ uuid }}
+
+            </b-button>
+          </div>
         </div>
       </div>
     <div class="row">
@@ -70,7 +80,8 @@ export default {
                             "0a3f50bc-159a-32b8-e044-0003ba298018",
                             "29d450c3-4d1b-4f70-b5c3-67d06110ca21",
                             "b3fbe76e-fc0d-40e7-8e18-33d72ec6a323",
-                            "ad0204ed-bf34-46d3-aaee-1d529b78335f"]
+                            "ad0204ed-bf34-46d3-aaee-1d529b78335f",
+                            "64eea1e1-3b9f-4458-b2e8-0001cec6eec6"]
     }
   },
   computed:{

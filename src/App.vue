@@ -1,41 +1,37 @@
 <template>
   <div id="app">
     <b-container fluid>
-    <h1>Adresser - Historik</h1>
+    <h1>{{service}} - Historik</h1>
       <div class="row">
-        <div class=col col-sm-8>
+        <div class=col col-sm-6>
           <b-form  @submit.stop.prevent >
-            <label for="uuid">Adresse UUID:</label>
+            <label for="serviceselect">Service</label>
+            <b-form-select id="serviceselect" v-model="service" :options="darservices"></b-form-select>
+            <label for="uuid">{{service}} UUID</label>
             <b-input
                v-model="idlokalId"
                type="text"
                id="uuid"
                size="35">
             </b-input>
-            <b-button variant="primary" @click="findAdresse()">Lookup</b-button>
-        </b-form>
-      </div>
-      <div class="col col-sm-4">
-        <h3>Samples</h3>
-        <ul class="list-group">
-          <li class="list-group-item" v-for="(uuid,uuidindex) in sampleUUID" >
-            <button @click="updateUUID(uuid)" type="button" class="btn btn-success">{{uuidindex+1}}. {{ uuid }}</button>
-          </li>
-        </ul>
-
-      </div>
-    </div>
-      <div class="row">
-        <div class="col col-sm-8">
-         <a :href="responseURL" class="btn btn-info" role="button" aria-disabled="true" target="_blank">{{ responseURL }}</a>
+          </b-form>
         </div>
-
+        <div class="col col-sm-6">
+          <h3>Samples</h3>
+          <ul class="list-group">
+            <li class="list-group-item" v-for="(uuid,uuidindex) in sampleUUID" >
+              <b-button @click="updateUUID(uuid)" type="button" class="btn btn-success">{{uuidindex+1}}. {{ uuid }}</b-button>
+            </li>
+          </ul>
+        </div>
       </div>
-      <hr>
     <div class="row">
       <div class="col">
+        <hr />
+        <a :href="url" class="btn btn-info" role="button" aria-disabled="true" target="_blank">{{ url }}</a>
+        <b-button variant="primary" @click="findAdresse()">Lookup</b-button>
         <p>Request status er {{ requestStatus }}. </p>
-        <p> Der er fundet {{ adresser.length }} instanse(r). Adressebetegnelse {{ adressebetegnelse }}</p>
+        <p> Der er fundet {{ adresser.length }} instans(er). Adressebetegnelse {{ adressebetegnelse }}</p>
         <a href="https://confluence.datafordeler.dk/pages/viewpage.action?pageId=16056354" role="button" class="btn btn-info" aria-disabled="true" target="_blank">Dokumentation</a>
       </div>
     </div>
@@ -52,32 +48,44 @@
 <script>
 import axios from 'axios';
 import * as d3 from 'd3';
-var darStatusCode =
-['None', "Intern forberedelse", "Foreløbig", "Gældende", "Nedlagt", "Henlagt", "Slettet", "Ikke i brug", "I brug", "Udgået"];
-
+var darStatusCode = ['None', "Intern forberedelse", "Foreløbig", "Gældende", "Nedlagt", "Henlagt", "Slettet", "Ikke i brug", "I brug", "Udgået"];
 export default {
   data () {
     return {
-        responseURL : '',
-        idlokalId : '4e906e30-ee35-452c-b1fc-138d3727d3e5',
-        requestStatus: 0,
+        responseURL      : 'https://services.datafordeler.dk/DAR/DAR/1/rest/Adresse',
+        displayURL       : 'https://services.datafordeler.dk/DAR/DAR/1/rest/Adresse',
+        idlokalId        : '4e906e30-ee35-452c-b1fc-138d3727d3e5',
+        requestStatus    : 0,
         adressebetegnelse: '',
-        adresser : {},
-        timestamps : [],
-        sortedtimestamps: [],
-        vector: [],
-        tableRow: [],
-        sampleUUID: ["e447309b-a443-410e-8fa1-f1b3733f55f5",
-                     "0a3f50a4-a914-32b8-e044-0003ba298018",
-                     "0a3f50bc-159a-32b8-e044-0003ba298018",
-                     "29d450c3-4d1b-4f70-b5c3-67d06110ca21",
-                     "b3fbe76e-fc0d-40e7-8e18-33d72ec6a323",
-                     "ad0204ed-bf34-46d3-aaee-1d529b78335f"]
+        registreringFra  : '2000-01-01T00:00:00',
+        service          : 'Adresse',
+        adresser         : {},
+        timestamps       : [],
+        sortedtimestamps : [],
+        vector           : [],
+        tableRow         : [],
+        darservices      : ['Adresse', 'Husnummer', 'Navngivenvej', 'Navngivenvejkommunedel', 'Postnummer', 'Supplerendebynavn'],
+        sampleUUID       : ["e447309b-a443-410e-8fa1-f1b3733f55f5",
+                            "0a3f50a4-a914-32b8-e044-0003ba298018",
+                            "0a3f50bc-159a-32b8-e044-0003ba298018",
+                            "29d450c3-4d1b-4f70-b5c3-67d06110ca21",
+                            "b3fbe76e-fc0d-40e7-8e18-33d72ec6a323",
+                            "ad0204ed-bf34-46d3-aaee-1d529b78335f"]
+    }
+  },
+  computed:{
+    url() {
+      this.responseURL = 'https://services.datafordeler.dk/DAR/DAR/1/rest/' + this.service;
+      return 'https://services.datafordeler.dk/DAR/DAR/1/rest/' + this.service + '?id=' + this.idlokalId + '&format=json' + '&registreringFra=' + this.registreringFra
     }
   },
   methods: {
     updateUUID(uuid) {
       this.idlokalId = uuid
+    },
+    buildURL() {
+      this.responseURL = 'https://services.datafordeler.dk/DAR/DAR/1/rest/' + this.service;
+      this.displayURL  = 'https://services.datafordeler.dk/DAR/DAR/1/rest/' + this.service + '?id=' + this.idlokalId + '&format=json' + '&registreringFra=' + this.registreringFra
     },
     registreTimestamp( timestamp ) {
       if ( timestamp) {
@@ -103,7 +111,7 @@ export default {
       }
     },
     findAdresse() {
-      this.adressebetegnelse     = '';
+      this.adressebetegnelse      = '';
       this.adresser               = [];
       this.timestamps             = [];
       this.sortedtimestamps       = [];
@@ -113,21 +121,21 @@ export default {
       this.getAdresse(this.idlokalId)
     },
     getAdresse(uuid) {
-      axios.get('https://services.datafordeler.dk/DAR/DAR/1/rest/adresse',
+      axios.get(this.responseURL,
       {
         params: {
           id: this.idlokalId,
           format: 'json',
-          registreringFra: '2000-01-01T00:00:00'
+          registreringFra: this.registreringFra
         }
       })
       .then(
         res => {
                   console.log(res)
                   this.requestStatus = res.status;
-                  this.responseURL   = res.request.responseURL;
-                  this.adresser   = res.data;
-                  var darStatus   = this.darStatus;
+                  this.responseURLd   = res.request.responseURL;
+                  this.adresser      = res.data;
+                  var darStatus      = this.darStatus;
 
                   for (var i in res.data) {
                     this.registreTimestamp(res.data[i].virkningFra);

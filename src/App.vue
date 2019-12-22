@@ -21,6 +21,8 @@
                  id="uuid"
                  size="35">
               </b-input>
+            </b-form-group>
+            <b-form-group>
               <label for="registreringFra">Registrering Fra</label>
               <b-input
                  v-model="registreringFra"
@@ -29,6 +31,14 @@
                  size="35">
               </b-input>
             </b-form-group>
+            <label for="virkningFra">Virkning Fra</label>
+            <b-input
+               v-model="virkningFra"
+               type="text"
+               id="virkningFra"
+               size="35">
+            </b-input>
+          </b-form-group>
           </b-form>
         </div>
         <div class="col col-sm-6">
@@ -80,6 +90,7 @@ export default {
         requestStatus    : 0,
         adressebetegnelse: '',
         registreringFra  : '0001-01-01T00:00:00',
+        virkningFra      : '0001-01-01T00:00:00',
         service          : 'Adresse',
         adresser         : {},
         timestamps       : [],

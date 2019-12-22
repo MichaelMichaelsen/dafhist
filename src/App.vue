@@ -2,14 +2,12 @@
   <div id="app">
     <b-navbar toggleable="lg" type="dark" variant="danger">
     <b-navbar-brand href="#">Dafhist (1.0)</b-navbar-brand>
-
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
   </b-navbar>
     <b-container fluid>
     <h1>{{service}} - Historik</h1>
       <div class="row">
-        <div class=col col-sm-8>
+        <div class=col col-sm-6>
           <b-form  @submit.stop.prevent >
             <b-form-group>
               <label for="serviceselect">Service</label>
@@ -23,10 +21,17 @@
                  id="uuid"
                  size="35">
               </b-input>
+              <label for="registreringFra">Registrering Fra</label>
+              <b-input
+                 v-model="registreringFra"
+                 type="text"
+                 id="registreringFra"
+                 size="35">
+              </b-input>
             </b-form-group>
           </b-form>
         </div>
-        <div class="col col-sm-4">
+        <div class="col col-sm-6">
           <h3>Samples</h3>
           <div class="list-group list-group-flush">
             <b-button

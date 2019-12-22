@@ -39995,6 +39995,13 @@ function transform(node) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -40007,7 +40014,7 @@ var darStatusCode = ['None', "Intern forberedelse", "Foreløbig", "Gældende", "
       idlokalId: '4e906e30-ee35-452c-b1fc-138d3727d3e5',
       requestStatus: 0,
       adressebetegnelse: '',
-      registreringFra: '2000-01-01T00:00:00',
+      registreringFra: '0001-01-01T00:00:00',
       service: 'Adresse',
       adresser: {},
       timestamps: [],
@@ -40075,6 +40082,9 @@ var darStatusCode = ['None', "Intern forberedelse", "Foreløbig", "Gældende", "
         console.log(res);
         this.requestStatus = res.status;
         this.responseURLd = res.request.responseURL;
+        res.data.sort(function (a, b) {
+          return a.registreringFra > b.registreringFra;
+        });
         this.adresser = res.data;
         var darStatus = this.darStatus;
 
@@ -98533,7 +98543,7 @@ webpackContext.id = 673;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(316);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_79e0cfa3_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__ = __webpack_require__(698);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_47c84c4e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__ = __webpack_require__(698);
 function injectStyle (ssrContext) {
   __webpack_require__(675)
   __webpack_require__(678)
@@ -98554,7 +98564,7 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_79e0cfa3_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_47c84c4e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -98575,7 +98585,7 @@ var content = __webpack_require__(676);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(55)("95ea8360", content, true, {});
+var update = __webpack_require__(55)("fc70694c", content, true, {});
 
 /***/ }),
 /* 676 */
@@ -98635,7 +98645,7 @@ var content = __webpack_require__(679);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(55)("434aba5e", content, true, {});
+var update = __webpack_require__(55)("a9d0a04a", content, true, {});
 
 /***/ }),
 /* 679 */
@@ -99555,7 +99565,7 @@ module.exports = function spread(callback) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('b-container',{attrs:{"fluid":""}},[_c('h1',[_vm._v(_vm._s(_vm.service)+" - Historik")]),_vm._v(" "),_c('div',{staticClass:"row"},[_c('div',{staticClass:"col",attrs:{"col-sm-8":""}},[_c('b-form',{on:{"submit":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('b-form-group',[_c('label',{attrs:{"for":"serviceselect"}},[_vm._v("Service")]),_vm._v(" "),_c('b-form-select',{attrs:{"id":"serviceselect","options":_vm.darservices},model:{value:(_vm.service),callback:function ($$v) {_vm.service=$$v},expression:"service"}})],1),_vm._v(" "),_c('b-form-group',[_c('label',{attrs:{"for":"uuid"}},[_vm._v(_vm._s(_vm.service)+" UUID")]),_vm._v(" "),_c('b-input',{attrs:{"type":"text","id":"uuid","size":"35"},model:{value:(_vm.idlokalId),callback:function ($$v) {_vm.idlokalId=$$v},expression:"idlokalId"}})],1)],1)],1),_vm._v(" "),_c('div',{staticClass:"col col-sm-4"},[_c('h3',[_vm._v("Samples")]),_vm._v(" "),_c('div',{staticClass:"list-group list-group-flush"},_vm._l((_vm.sampleUUID),function(uuid,uuidindex){return _c('b-button',{staticClass:"list-group-item list-group-item-action text-monospace",attrs:{"type":"button"},on:{"click":function($event){return _vm.updateUUID(uuid)}}},[_vm._v("\n            "+_vm._s(uuidindex+1)+". "+_vm._s(uuid)+"\n\n          ")])}),1)])]),_vm._v(" "),_c('div',{staticClass:"row"},[_c('div',{staticClass:"col"},[_c('hr'),_vm._v(" "),_c('a',{staticClass:"btn btn-info",attrs:{"href":_vm.url,"role":"button","aria-disabled":"true","target":"_blank"}},[_vm._v(_vm._s(_vm.url))]),_vm._v(" "),_c('b-button',{attrs:{"variant":"primary"},on:{"click":function($event){return _vm.findAdresse()}}},[_vm._v("Lookup")]),_vm._v(" "),_c('p',[_vm._v("Request status er "+_vm._s(_vm.requestStatus)+". ")]),_vm._v(" "),_c('p',[_vm._v(" Der er fundet "+_vm._s(_vm.adresser.length)+" instans(er). Adressebetegnelse "+_vm._s(_vm.adressebetegnelse))]),_vm._v(" "),_c('a',{staticClass:"btn btn-info",attrs:{"href":"https://confluence.datafordeler.dk/pages/viewpage.action?pageId=16056354","role":"button","aria-disabled":"true","target":"_blank"}},[_vm._v("Dokumentation")])],1)]),_vm._v(" "),_c('b-table',{attrs:{"striped":"","hover":"","items":_vm.tableRow}}),_vm._v(" "),_c('div',[_c('div',{attrs:{"id":"Area"}})])],1)],1)}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('b-navbar',{attrs:{"toggleable":"lg","type":"dark","variant":"danger"}},[_c('b-navbar-brand',{attrs:{"href":"#"}},[_vm._v("Dafhist (1.0)")]),_vm._v(" "),_c('b-navbar-toggle',{attrs:{"target":"nav-collapse"}})],1),_vm._v(" "),_c('b-container',{attrs:{"fluid":""}},[_c('h1',[_vm._v(_vm._s(_vm.service)+" - Historik")]),_vm._v(" "),_c('div',{staticClass:"row"},[_c('div',{staticClass:"col",attrs:{"col-sm-8":""}},[_c('b-form',{on:{"submit":function($event){$event.stopPropagation();$event.preventDefault();}}},[_c('b-form-group',[_c('label',{attrs:{"for":"serviceselect"}},[_vm._v("Service")]),_vm._v(" "),_c('b-form-select',{attrs:{"id":"serviceselect","options":_vm.darservices},model:{value:(_vm.service),callback:function ($$v) {_vm.service=$$v},expression:"service"}})],1),_vm._v(" "),_c('b-form-group',[_c('label',{attrs:{"for":"uuid"}},[_vm._v(_vm._s(_vm.service)+" UUID")]),_vm._v(" "),_c('b-input',{attrs:{"type":"text","id":"uuid","size":"35"},model:{value:(_vm.idlokalId),callback:function ($$v) {_vm.idlokalId=$$v},expression:"idlokalId"}})],1)],1)],1),_vm._v(" "),_c('div',{staticClass:"col col-sm-4"},[_c('h3',[_vm._v("Samples")]),_vm._v(" "),_c('div',{staticClass:"list-group list-group-flush"},_vm._l((_vm.sampleUUID),function(uuid,uuidindex){return _c('b-button',{key:uuidindex,staticClass:"list-group-item list-group-item-action text-monospace",attrs:{"type":"button"},on:{"click":function($event){return _vm.updateUUID(uuid)}}},[_vm._v("\n            "+_vm._s(uuidindex+1)+". "+_vm._s(uuid)+"\n\n          ")])}),1)])]),_vm._v(" "),_c('div',{staticClass:"row"},[_c('div',{staticClass:"col"},[_c('hr'),_vm._v(" "),_c('a',{staticClass:"btn btn-info",attrs:{"href":_vm.url,"role":"button","aria-disabled":"true","target":"_blank"}},[_vm._v(_vm._s(_vm.url))]),_vm._v(" "),_c('b-button',{attrs:{"variant":"primary"},on:{"click":function($event){return _vm.findAdresse()}}},[_vm._v("Lookup")]),_vm._v(" "),_c('p',[_vm._v("Request status er "+_vm._s(_vm.requestStatus)+". ")]),_vm._v(" "),_c('p',[_vm._v(" Der er fundet "+_vm._s(_vm.adresser.length)+" instans(er). Adressebetegnelse "+_vm._s(_vm.adressebetegnelse))]),_vm._v(" "),_c('a',{staticClass:"btn btn-info",attrs:{"href":"https://confluence.datafordeler.dk/pages/viewpage.action?pageId=16056354","role":"button","aria-disabled":"true","target":"_blank"}},[_vm._v("Dokumentation")])],1)]),_vm._v(" "),_c('b-table',{attrs:{"striped":"","hover":"","items":_vm.tableRow}}),_vm._v(" "),_c('div',[_c('div',{attrs:{"id":"Area"}})])],1)],1)}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);

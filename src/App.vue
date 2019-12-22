@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+    <b-navbar toggleable="lg" type="dark" variant="danger">
+    <b-navbar-brand href="#">Dafhist (1.0)</b-navbar-brand>
+
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+  </b-navbar>
     <b-container fluid>
     <h1>{{service}} - Historik</h1>
       <div class="row">
@@ -28,6 +34,7 @@
               class="list-group-item list-group-item-action text-monospace"
               @click="updateUUID(uuid)"
               v-for="(uuid,uuidindex) in sampleUUID"
+              :key="uuidindex"
               >
               {{uuidindex+1}}. {{ uuid }}
 
@@ -67,7 +74,7 @@ export default {
         idlokalId        : '4e906e30-ee35-452c-b1fc-138d3727d3e5',
         requestStatus    : 0,
         adressebetegnelse: '',
-        registreringFra  : '2000-01-01T00:00:00',
+        registreringFra  : '0001-01-01T00:00:00',
         service          : 'Adresse',
         adresser         : {},
         timestamps       : [],
@@ -144,7 +151,10 @@ export default {
         res => {
                   console.log(res)
                   this.requestStatus = res.status;
-                  this.responseURLd   = res.request.responseURL;
+                  this.responseURLd  = res.request.responseURL;
+                  res.data.sort(function(a,b){
+                    return a.registreringFra > b.registreringFra
+                  })
                   this.adresser      = res.data;
                   var darStatus      = this.darStatus;
 
